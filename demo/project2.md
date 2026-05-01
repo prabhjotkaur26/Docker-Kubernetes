@@ -1,6 +1,6 @@
 # Basic Deployment (Using HTML)
 ## We’ll create:
-- Your own HTML page
+- Own HTML page
 - Run it using Docker + httpd
 - Open it in browser
 ---
@@ -23,7 +23,7 @@ Save and close.
 ### Step 3: Check file exists
 dir
 
-👉 You must see:
+ You must see:
 
 index.html
 ---
@@ -38,7 +38,7 @@ docker run -d -p 8090:80 -v ${PWD}:/usr/local/apache2/htdocs httpd
 
 ---
 ### Step 6: Open browser
-http://localhost:8080
+http://localhost:8090
 ### Final Output
 
 You will see:
@@ -46,7 +46,7 @@ My First Page
 <img width="1174" height="200" alt="image" src="https://github.com/user-attachments/assets/c72498b8-6369-4908-972f-9a7514634b76" />
 
 ---
-### What you did
+### What we did
 Created HTML page
 Pulled image from Docker Hub
 Ran container
