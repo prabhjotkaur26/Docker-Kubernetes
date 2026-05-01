@@ -62,7 +62,7 @@ You will see:
 
 This is the default page from Nginx
 ---
-### What you just did
+### What we just did
 1. Pulled image from Docker Hub
 2. Created container from image
 3. Exposed port
