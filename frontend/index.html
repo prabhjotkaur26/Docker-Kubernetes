@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>URL Shortener</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    /* Background floating circles */
+    .bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .bg span {
+      position: absolute;
+      display: block;
+      width: 20px;
+      height: 20px;
+      background: rgba(255,255,255,0.2);
+      animation: float 20s linear infinite;
+      bottom: -150px;
+      border-radius: 50%;
+    }
+
+    .bg span:nth-child(1) { left: 10%; animation-duration: 15s; }
+    .bg span:nth-child(2) { left: 20%; animation-duration: 12s; }
+    .bg span:nth-child(3) { left: 30%; animation-duration: 18s; }
+    .bg span:nth-child(4) { left: 40%; animation-duration: 10s; }
+    .bg span:nth-child(5) { left: 50%; animation-duration: 14s; }
+    .bg span:nth-child(6) { left: 60%; animation-duration: 16s; }
+    .bg span:nth-child(7) { left: 70%; animation-duration: 11s; }
+    .bg span:nth-child(8) { left: 80%; animation-duration: 13s; }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-1000px) rotate(360deg); opacity: 0; }
+    }
+
+    /* Glass card */
+    .box {
+      position: relative;
+      z-index: 1;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(15px);
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      width: 350px;
+      color: white;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      animation: slideUp 0.8s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      transform: scale(1.05);
+    }
+
+    button {
+      padding: 10px 15px;
+      background: #ffffff;
+      color: #667eea;
+      border: none;
+      border-radius: 10px;
+      margin: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      background: #f0f0f0;
+    }
+
+    #result {
+      margin-top: 15px;
+      word-wrap: break-word;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    a {
+      color: #fff;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="bg">
+  <span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span>
+</div>
+
+<div class="box">
+  <h2>URL Shortener</h2>
+
+  <input id="url" placeholder="Enter URL">
+  <br>
+
+  <button onclick="shorten()">Shorten</button>
+  <button onclick="goDashboard()">Dashboard</button>
+
+  <p id="result"></p>
+</div>
+
+<script>
+async function shorten() {
+  const url = document.getElementById("url").value;
+
+  const res = await fetch("/api/shorten", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({url})
+  });
+
+  const data = await res.json();
+
+  const shortUrl = window.location.origin + "/" + data.short;
+
+  document.getElementById("result").innerHTML =
+    `<br><a href="${shortUrl}" target="_blank">${shortUrl}</a>`;
+}
+
+function goDashboard() {
+  window.location.href = "/dashboard.html";
+}
+</script>
+
+</body>
+</html>
